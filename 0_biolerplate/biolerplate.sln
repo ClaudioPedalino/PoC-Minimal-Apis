@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biolerplate-api-5", "biolerplate-api-5\biolerplate-api-5.csproj", "{AAC68DEF-2AB7-48DD-BF11-7B52653A9D2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "biolerplate-minimalapi-6", "biolerplate-minimalapi-6\biolerplate-minimalapi-6.csproj", "{A85B050B-1508-4E6F-84AA-912EC907B67A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAC68DEF-2AB7-48DD-BF11-7B52653A9D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC68DEF-2AB7-48DD-BF11-7B52653A9D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC68DEF-2AB7-48DD-BF11-7B52653A9D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC68DEF-2AB7-48DD-BF11-7B52653A9D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A85B050B-1508-4E6F-84AA-912EC907B67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A85B050B-1508-4E6F-84AA-912EC907B67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A85B050B-1508-4E6F-84AA-912EC907B67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A85B050B-1508-4E6F-84AA-912EC907B67A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCAC39F3-88A6-444E-924F-CF8B340C255C}
+	EndGlobalSection
+EndGlobal

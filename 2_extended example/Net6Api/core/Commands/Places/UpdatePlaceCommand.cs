@@ -1,13 +1,11 @@
 ﻿namespace net6.core.Commands
 {
     public record UpdatePlaceCommand(Guid Id,
-                                      string Nombre,
-                                      string Apellido,
-                                      uint Edad,
-                                      DateTime FechaNacimiento,
-                                      string Email,
-                                      string AvatarUrl,
-                                      string Telefono)
+                                     string Ciudad,
+                                     string Direccion,
+                                     uint Numeracion,
+                                     string Latitud,
+                                     string Longitud)
         : IRequest<CommandResult>
     { }
 

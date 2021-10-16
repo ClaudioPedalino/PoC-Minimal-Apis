@@ -8,10 +8,10 @@
         private readonly IMapper _mapper;
         private readonly IPlaceRepository _placeRepository;
 
-        public GetPlaceByIdQueryHandler(IMapper mapper, IPlaceRepository PlaceRepository)
+        public GetPlaceByIdQueryHandler(IMapper mapper, IPlaceRepository placeRepository)
         {
             _mapper = mapper;
-            _placeRepository = PlaceRepository;
+            _placeRepository = placeRepository;
         }
 
         public async Task<GetPlaceResponse?> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken)

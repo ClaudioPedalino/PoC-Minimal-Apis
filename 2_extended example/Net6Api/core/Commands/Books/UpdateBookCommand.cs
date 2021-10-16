@@ -1,35 +1,33 @@
 ﻿namespace net6.core.Commands
 {
     public record UpdateBookCommand(Guid Id,
-                                      string Nombre,
-                                      string Apellido,
-                                      uint Edad,
-                                      DateTime FechaNacimiento,
-                                      string Email,
-                                      string AvatarUrl,
-                                      string Telefono)
+                                    string Titulo,
+                                    string Autor,
+                                    string Genero,
+                                    decimal Precio,
+                                    uint CantidadPaginas)
         : IRequest<CommandResult>
     { }
 
     public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, CommandResult>
     {
         private readonly IMapper _mapper;
-        private readonly IPeopleRepository _peopleRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public UpdateBookCommandHandler(IMapper mapper, IPeopleRepository peopleRepository)
+        public UpdateBookCommandHandler(IMapper mapper, IBookRepository bookRepository)
         {
             _mapper = mapper;
-            _peopleRepository = peopleRepository;
+            _bookRepository = bookRepository;
         }
 
         public async Task<CommandResult> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _peopleRepository.GetById(request.Id);
+            var entity = await _bookRepository.GetById(request.Id);
             if (entity is null)
                 return CommandResult.NotFound();
 
-            entity = _mapper.Map<People>(request);
-            await _peopleRepository.Update(entity);
+            entity = _mapper.Map<Book>(request);
+            await _bookRepository.Update(entity);
 
             return CommandResult.Success();
         }

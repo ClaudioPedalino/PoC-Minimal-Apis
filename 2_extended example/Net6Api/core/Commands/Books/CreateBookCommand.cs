@@ -11,19 +11,19 @@
     public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, CommandResult>
     {
         private readonly IMapper _mapper;
-        private readonly IPeopleRepository _peopleRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public CreateBookCommandHandler(IMapper mapper, IPeopleRepository peopleRepository)
+        public CreateBookCommandHandler(IMapper mapper, IBookRepository bookRepository)
         {
             _mapper = mapper;
-            _peopleRepository = peopleRepository;
+            _bookRepository = bookRepository;
         }
 
         public async Task<CommandResult> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<People>(request);
+            var entity = _mapper.Map<Book>(request);
 
-            await _peopleRepository.Insert(entity);
+            await _bookRepository.Insert(entity);
 
             return CommandResult.Success();
         }

@@ -1,12 +1,10 @@
 ﻿namespace net6.core.Commands
 {
-    public record CreatePlaceCommand(string Nombre,
-                                      string Apellido,
-                                      uint Edad,
-                                      DateTime FechaNacimiento,
-                                      string Email,
-                                      string AvatarUrl,
-                                      string Telefono)
+    public record CreatePlaceCommand(string Ciudad,
+                                     string Direccion,
+                                     uint Numeracion,
+                                     string Latitud,
+                                     string Longitud)
         : IRequest<CommandResult>
     { }
 

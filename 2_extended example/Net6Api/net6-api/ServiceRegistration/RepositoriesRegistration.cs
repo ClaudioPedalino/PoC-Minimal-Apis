@@ -6,6 +6,7 @@
         builder.Services.AddTransient<IPeopleRepository, PeopleRepository>();
         builder.Services.AddTransient<IPlaceRepository, PlaceRepository>();
         builder.Services.AddTransient<IBookRepository, BookRepository>();
+        builder.Services.AddTransient<IUserRepository, UserRepository>();
         return builder;
     }
 }

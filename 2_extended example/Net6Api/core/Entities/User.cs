@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace net6.core.Entities
+﻿public class User : IdentityUser
 {
-    public class User : IdentityUser
-    {
-    }
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
 }

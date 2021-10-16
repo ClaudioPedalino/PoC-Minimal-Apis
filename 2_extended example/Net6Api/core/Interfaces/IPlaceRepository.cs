@@ -1,6 +1,3 @@
-﻿namespace net6.core.Interfaces
+﻿public interface IPlaceRepository : IBaseRepository<Place>
 {
-    public interface IPlaceRepository : IBaseRepository<Place>
-    {
-    }
 }

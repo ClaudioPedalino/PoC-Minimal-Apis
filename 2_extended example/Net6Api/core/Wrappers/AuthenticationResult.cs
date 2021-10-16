@@ -1,0 +1,1 @@
+﻿public record AuthenticationResult(string Token, IEnumerable<string> ErrorMessages) { }

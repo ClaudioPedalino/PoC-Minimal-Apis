@@ -5,6 +5,9 @@
         builder.Services.AddMediatR(typeof(CreatePersonCommand).GetTypeInfo().Assembly);
         builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         builder.Services.AddAutoMapper(typeof(PeopleProfile));
+        builder.Services.AddFluentValidation(fv =>
+            fv.RegisterValidatorsFromAssemblyContaining<PeopleValidator>());
+
         //builder.Services.AddHealthCheck(Configuration);
 
         return builder;

@@ -1,27 +1,24 @@
-﻿namespace net6.core.Queries.People
+﻿public record GetPeopleByIdQuery(Guid Id) : IRequest<GetPeopleResponse?> { }
+
+
+public class GetPeopleByIdQueryHandler : IRequestHandler<GetPeopleByIdQuery, GetPeopleResponse?>
 {
-    public record GetPeopleByIdQuery(Guid Id) : IRequest<GetPeopleResponse?> { }
+    private readonly IMapper _mapper;
+    private readonly IPeopleRepository _peopleRepository;
 
-
-    public class GetPeopleByIdQueryHandler : IRequestHandler<GetPeopleByIdQuery, GetPeopleResponse?>
+    public GetPeopleByIdQueryHandler(IMapper mapper, IPeopleRepository peopleRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IPeopleRepository _peopleRepository;
+        _mapper = mapper;
+        _peopleRepository = peopleRepository;
+    }
 
-        public GetPeopleByIdQueryHandler(IMapper mapper, IPeopleRepository peopleRepository)
-        {
-            _mapper = mapper;
-            _peopleRepository = peopleRepository;
-        }
+    public async Task<GetPeopleResponse?> Handle(GetPeopleByIdQuery request, CancellationToken cancellationToken)
+    {
+        var result = await _peopleRepository.GetById(request.Id);
 
-        public async Task<GetPeopleResponse?> Handle(GetPeopleByIdQuery request, CancellationToken cancellationToken)
-        {
-            var result = await _peopleRepository.GetById(request.Id);
+        if (result is null)
+            return default;
 
-            if (result is null)
-                return default;
-
-            return _mapper.Map<GetPeopleResponse>(result);
-        }
+        return _mapper.Map<GetPeopleResponse>(result);
     }
 }

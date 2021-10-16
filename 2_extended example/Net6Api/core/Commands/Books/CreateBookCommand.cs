@@ -1,31 +1,28 @@
-﻿namespace net6.core.Commands
+﻿public record CreateBookCommand(string Titulo,
+                                string Autor,
+                                string Genero,
+                                decimal Precio,
+                                uint CantidadPaginas)
+    : IRequest<CommandResult>
+{ }
+
+public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, CommandResult>
 {
-    public record CreateBookCommand(string Titulo,
-                                    string Autor,
-                                    string Genero,
-                                    decimal Precio,
-                                    uint CantidadPaginas)
-        : IRequest<CommandResult>
-    { }
+    private readonly IMapper _mapper;
+    private readonly IBookRepository _bookRepository;
 
-    public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, CommandResult>
+    public CreateBookCommandHandler(IMapper mapper, IBookRepository bookRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IBookRepository _bookRepository;
+        _mapper = mapper;
+        _bookRepository = bookRepository;
+    }
 
-        public CreateBookCommandHandler(IMapper mapper, IBookRepository bookRepository)
-        {
-            _mapper = mapper;
-            _bookRepository = bookRepository;
-        }
+    public async Task<CommandResult> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    {
+        var entity = _mapper.Map<Book>(request);
 
-        public async Task<CommandResult> Handle(CreateBookCommand request, CancellationToken cancellationToken)
-        {
-            var entity = _mapper.Map<Book>(request);
+        await _bookRepository.Insert(entity);
 
-            await _bookRepository.Insert(entity);
-
-            return CommandResult.Success();
-        }
+        return CommandResult.Success();
     }
 }

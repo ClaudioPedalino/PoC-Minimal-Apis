@@ -1,28 +1,25 @@
-﻿namespace net6.core.Queries.People
+﻿public record GetAllPeopleQuery : IRequest<IEnumerable<GetPeopleResponse>>
 {
-    public record GetAllPeopleQuery : IRequest<IEnumerable<GetPeopleResponse>>
+    public string CacheKey => $"{GetType().Name}";
+}
+
+public class GetAllPeopleQueryHandler : IRequestHandler<GetAllPeopleQuery, IEnumerable<GetPeopleResponse>>
+{
+    private readonly IMapper _mapper;
+    private readonly IPeopleRepository _peopleRepository;
+
+    public GetAllPeopleQueryHandler(IMapper mapper, IPeopleRepository peopleRepository)
     {
-        public string CacheKey => $"{GetType().Name}";
+        _mapper = mapper;
+        _peopleRepository = peopleRepository;
     }
 
-    public class GetAllPeopleQueryHandler : IRequestHandler<GetAllPeopleQuery, IEnumerable<GetPeopleResponse>>
+    public async Task<IEnumerable<GetPeopleResponse>> Handle(GetAllPeopleQuery request, CancellationToken cancellationToken)
     {
-        private readonly IMapper _mapper;
-        private readonly IPeopleRepository _peopleRepository;
+        var result = await _peopleRepository.GetAll();
 
-        public GetAllPeopleQueryHandler(IMapper mapper, IPeopleRepository peopleRepository)
-        {
-            _mapper = mapper;
-            _peopleRepository = peopleRepository;
-        }
+        var response = _mapper.Map<IEnumerable<GetPeopleResponse>>(result);
 
-        public async Task<IEnumerable<GetPeopleResponse>> Handle(GetAllPeopleQuery request, CancellationToken cancellationToken)
-        {
-            var result = await _peopleRepository.GetAll();
-
-            var response = _mapper.Map<IEnumerable<GetPeopleResponse>>(result);
-
-            return response;
-        }
+        return response;
     }
 }

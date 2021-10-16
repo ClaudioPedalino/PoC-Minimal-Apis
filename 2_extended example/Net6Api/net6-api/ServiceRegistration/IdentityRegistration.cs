@@ -3,7 +3,7 @@
     public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder, IConfiguration _configuration)
     {
         builder.Services.AddDefaultIdentity<User>()
-                .AddEntityFrameworkStores<DataContext>();
+                        .AddEntityFrameworkStores<DataContext>();
 
         var jwtSettings = new JwtSettings();
         _configuration.Bind(nameof(jwtSettings), jwtSettings);
@@ -28,6 +28,16 @@
                         ValidateLifetime = true
                     };
                 });
+
+        /// Para definir auth de jwt en todos los endpoints
+        //builder.Services.AddAuthorization(opt =>
+        //{
+        //    opt.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        //    .RequireAuthenticatedUser()
+        //    .Build();
+
+        //});
 
         return builder;
     }

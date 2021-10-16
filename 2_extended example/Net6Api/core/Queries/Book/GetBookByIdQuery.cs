@@ -1,27 +1,24 @@
-﻿namespace net6.core.Queries.Book
+﻿public record GetBookByIdQuery(Guid Id) : IRequest<GetBookResponse?> { }
+
+
+public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, GetBookResponse?>
 {
-    public record GetBookByIdQuery(Guid Id) : IRequest<GetBookResponse?> { }
+    private readonly IMapper _mapper;
+    private readonly IBookRepository _bookRepository;
 
-
-    public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, GetBookResponse?>
+    public GetBookByIdQueryHandler(IMapper mapper, IBookRepository bookRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IBookRepository _bookRepository;
+        _mapper = mapper;
+        _bookRepository = bookRepository;
+    }
 
-        public GetBookByIdQueryHandler(IMapper mapper, IBookRepository bookRepository)
-        {
-            _mapper = mapper;
-            _bookRepository = bookRepository;
-        }
+    public async Task<GetBookResponse?> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
+    {
+        var result = await _bookRepository.GetById(request.Id);
 
-        public async Task<GetBookResponse?> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
-        {
-            var result = await _bookRepository.GetById(request.Id);
+        if (result is null)
+            return default;
 
-            if (result is null)
-                return default;
-
-            return _mapper.Map<GetBookResponse>(result);
-        }
+        return _mapper.Map<GetBookResponse>(result);
     }
 }

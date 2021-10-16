@@ -2,7 +2,7 @@
 {
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
-        //builder.Services.
+        builder.Services.AddScoped<ITokenService, TokenService>();
 
         return builder;
     }

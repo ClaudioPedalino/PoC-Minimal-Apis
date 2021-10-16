@@ -1,0 +1,17 @@
+﻿global using AutoMapper;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using Microsoft.Extensions.Logging;
+global using net6.core.Commands;
+global using net6.core.Entities;
+global using net6.core.Extensions;
+global using net6.core.Helpers;
+global using net6.core.Interfaces;
+global using net6.core.Models;
+global using net6.core.Wrappers;
+global using System;
+global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
+global using System.Linq;
+global using System.Threading.Tasks;

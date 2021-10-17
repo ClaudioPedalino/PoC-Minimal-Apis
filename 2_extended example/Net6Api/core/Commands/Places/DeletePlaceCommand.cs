@@ -1,6 +1,6 @@
-﻿public record DeletePlaceCommand(Guid Id) : IRequest<CommandResult> { }
+﻿public record DeletePlaceCommand(Guid Id) : IRequest<CommandResponse> { }
 
-public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, CommandResult>
+public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IPlaceRepository _placeRepository;
@@ -11,8 +11,8 @@ public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Com
         _placeRepository = placeRepository;
     }
 
-    public async Task<CommandResult> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
         => await _placeRepository.Delete(request.Id)
-        ? CommandResult.Success()
-        : CommandResult.Error("Huno un problema al borrar el registro");
+        ? CommandResponse.Success(CommandResponseHelper.DeleteMessage<Place>())
+        : CommandResponse.Fail(CommandResponseHelper.DeleteErrorMessage<Place>());
 }

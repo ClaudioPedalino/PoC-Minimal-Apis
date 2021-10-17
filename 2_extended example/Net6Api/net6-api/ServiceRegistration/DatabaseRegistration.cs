@@ -1,12 +1,17 @@
 ﻿public static class DatabaseRegistration
 {
-    public static WebApplicationBuilder AddDatabase(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddDatabase(this WebApplicationBuilder builder, AppConfig appConfig)
     {
-        //builder.Services.AddDbContext<DataContext>(opt =>
-        //    opt.UseSqlite("Filename=Net6Api_LocalDb.db")); ;
-
-        builder.Services.AddDbContext<DataContext>(opt
-            => opt.UseSqlServer("Server=localhost;Database=Net6ApiDb;User Id=sa;Password=Temporal1;"));
+        if (appConfig.DatabaseConfig.UsingLocalDb)
+        {
+            builder.Services.AddDbContext<DataContext>(opt
+                => opt.UseSqlServer(appConfig.DatabaseConfig.SqlLiteDb));
+        }
+        else
+        {
+            builder.Services.AddDbContext<DataContext>(opt
+                => opt.UseSqlServer(appConfig.DatabaseConfig.SQLServerDb));
+        }
 
         return builder;
     }

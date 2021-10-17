@@ -1,6 +1,8 @@
-﻿public record GetAllBookQuery : IRequest<IEnumerable<GetBookResponse>>
+﻿public record GetAllBookQuery : IRequest<IEnumerable<GetBookResponse>>, IApiKeyValidation//, ICacheable
 {
     public string CacheKey => $"{GetType().Name}";
+    public bool BypassCache { get; set; }
+    public TimeSpan? SlidingExpiration { get; set; }
 }
 
 public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQuery, IEnumerable<GetBookResponse>>
@@ -14,12 +16,6 @@ public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQuery, IEnumerab
         _bookRepository = bookRepository;
     }
 
-    public async Task<IEnumerable<GetBookResponse>> Handle(GetAllBookQuery request, CancellationToken cancellationToken)
-    {
-        var result = await _bookRepository.GetAll();
-
-        var response = _mapper.Map<IEnumerable<GetBookResponse>>(result);
-
-        return response;
-    }
+    public async Task<IEnumerable<GetBookResponse>> Handle(GetAllBookQuery request, CancellationToken cancellationToken) =>
+        _mapper.Map<IEnumerable<GetBookResponse>>(await _bookRepository.GetAll());
 }

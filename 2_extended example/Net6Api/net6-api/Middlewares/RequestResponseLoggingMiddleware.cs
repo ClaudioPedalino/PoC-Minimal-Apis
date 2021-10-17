@@ -13,17 +13,13 @@
     {
         var request = SetRequest(context);
 
-        //Copy a pointer to the original response body stream
-        var originalBodyStream = context.Response.Body;
+        var originalBodyStream = context.Response.Body; ///Copy a pointer to the original response body stream
 
-        //Create a new memory stream...
-        using var responseBody = new MemoryStream();
+        using var responseBody = new MemoryStream(); ///Create a new memory stream...
 
-        //...and use that for the temporary response body
-        context.Response.Body = responseBody;
+        context.Response.Body = responseBody; ///...and use that for the temporary response body
 
-        //Continue down the Middleware pipeline, eventually returning to this class
-        await _next(context);
+        await _next(context); ///Continue down the Middleware pipeline, eventually returning to this class
 
         var response = await SetResponse(context.Response);
 
@@ -48,14 +44,11 @@
 
     private async Task<LoggedResponse> SetResponse(HttpResponse response)
     {
-        //We need to read the response stream from the beginning...
-        response.Body.Seek(0, SeekOrigin.Begin);
+        response.Body.Seek(0, SeekOrigin.Begin); ///We need to read the response stream from the beginning...
 
-        //...and copy it into a string
-        string bodyString = await new StreamReader(response.Body).ReadToEndAsync();
+        string bodyString = await new StreamReader(response.Body).ReadToEndAsync(); ///...and copy it into a string
 
-        //We need to reset the reader for the response so that the client can read it.
-        response.Body.Seek(0, SeekOrigin.Begin);
+        response.Body.Seek(0, SeekOrigin.Begin); ///We need to reset the reader for the response so that the client can read it.
 
         return new LoggedResponse()
         {

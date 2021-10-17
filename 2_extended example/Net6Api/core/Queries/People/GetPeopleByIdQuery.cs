@@ -1,4 +1,4 @@
-﻿public record GetPeopleByIdQuery(Guid Id) : IRequest<GetPeopleResponse?> { }
+﻿public record GetPeopleByIdQuery(Guid Id) : IRequest<GetPeopleResponse?>, IApiKeyValidation { }
 
 
 public class GetPeopleByIdQueryHandler : IRequestHandler<GetPeopleByIdQuery, GetPeopleResponse?>

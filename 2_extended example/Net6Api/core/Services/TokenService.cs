@@ -1,18 +1,14 @@
 ﻿public class TokenService : ITokenService
 {
     private readonly JwtSettings _jwtSettings;
-    private readonly IConfiguration _configuration;
 
-    public TokenService(JwtSettings jwtSettings, IConfiguration configuration)
+    public TokenService(IOptionsMonitor<JwtSettings> jwtSettings)
     {
-        _jwtSettings = jwtSettings;
-        _configuration = configuration;
+        _jwtSettings = jwtSettings.CurrentValue;
     }
 
     public AuthenticationResult GenerateAuthResult(IdentityUser newUser)
     {
-        var pepe = _configuration.GetSection("JwtSettings:ValidHours");
-
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
 
@@ -27,15 +23,14 @@
                     new Claim("id", newUser.Id),
                     new Claim("createdAt", DateTimeHelper.GetSystemDate().ToString()),
                 }),
-            Expires = DateTimeHelper.GetSystemDate().AddHours(Convert.ToInt32(_configuration.GetSection("JwtSettings:ValidHours").Value)),
+            Expires = DateTimeHelper.GetSystemDate().AddHours(Convert.ToInt32(_jwtSettings.ValidHours)),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                                                         SecurityAlgorithms.HmacSha256Signature)
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
-        var response = new AuthenticationResult(tokenHandler.WriteToken(token), default);
-        return response;
+        return new AuthenticationResult(tokenHandler.WriteToken(token), new List<string>());
     }
 
 }

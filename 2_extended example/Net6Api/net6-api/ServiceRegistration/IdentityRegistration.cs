@@ -1,33 +1,31 @@
 ﻿public static class IdentityRegistration
 {
-    public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder, IConfiguration _configuration)
+    public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder, AppConfig appConfig)
     {
-        builder.Services.AddDefaultIdentity<User>()
-                        .AddEntityFrameworkStores<DataContext>();
+        builder.Services
+            .AddDefaultIdentity<User>()
+            .AddEntityFrameworkStores<DataContext>();
 
-        var jwtSettings = new JwtSettings();
-        _configuration.Bind(nameof(jwtSettings), jwtSettings);
-        builder.Services.AddSingleton(jwtSettings);
-
-        builder.Services.AddAuthentication(x =>
-        {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-                .AddJwtBearer(x =>
+        builder.Services
+            .AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(config =>
+            {
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
                 {
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        RequireExpirationTime = false,
-                        ValidateLifetime = true
-                    };
-                });
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appConfig.JwtSettings.Secret)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    RequireExpirationTime = false,
+                    ValidateLifetime = true
+                };
+            });
 
         /// Para definir auth de jwt en todos los endpoints
         //builder.Services.AddAuthorization(opt =>
@@ -36,7 +34,6 @@
         //    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
         //    .RequireAuthenticatedUser()
         //    .Build();
-
         //});
 
         return builder;

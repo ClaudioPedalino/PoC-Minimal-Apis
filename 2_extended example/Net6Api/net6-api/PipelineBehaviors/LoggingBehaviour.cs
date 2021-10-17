@@ -1,5 +1,4 @@
 ﻿public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
 {
     private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _logger;
 
@@ -8,25 +7,20 @@
         _logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request,
-                                        CancellationToken cancellationToken,
-                                        RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        var timer = Stopwatch.StartNew();
-
-        /// pre
-        //Console.ForegroundColor = ConsoleColor.Yellow;
-        //Console.WriteLine($"{request.GetType().Name} is executing");
-        //Console.ResetColor();
-        _logger.LogInformation($"{request.GetType().Name} is executing");
+        _logger.LogInformation($"Handling {typeof(TRequest).Name}");
+        Type myType = request.GetType();
+        IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+        foreach (PropertyInfo prop in props)
+        {
+            object propValue = prop.GetValue(request, null);
+            _logger.LogInformation("{Property} : {@Value}", prop.Name, propValue);
+        }
+        
         var response = await next();
-
-        /// post
-        timer.Stop();
-        //Console.ForegroundColor = ConsoleColor.Yellow;
-        //Console.WriteLine($"{request.GetType().Name} has finished in {timer.ElapsedMilliseconds}");
-        //Console.ResetColor();
-        _logger.LogInformation($"{request.GetType().Name} has finished in {timer.ElapsedMilliseconds}");
+        
+        _logger.LogInformation($"Handled {typeof(TResponse).Name}");
         return response;
     }
 }

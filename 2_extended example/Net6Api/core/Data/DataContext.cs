@@ -1,13 +1,21 @@
-﻿public class DataContext : DbContext
+﻿using Microsoft.AspNetCore.Http;
+
+public class DataContext : DbContext
 {
     private readonly ILoggerFactory _dataContextLoggerFactory;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly DatabaseConfig _databaseConfig;
 
-    public DataContext() { }
+    public DataContext() { } /// For migration only
 
-    public DataContext(DbContextOptions<DataContext> options) : base(options)
+    public DataContext(DbContextOptions<DataContext> options,
+                       IHttpContextAccessor httpContextAccessor, 
+                       IOptionsMonitor<DatabaseConfig> databaseConfig) : base(options)
     {
         Database.EnsureCreated();
         _dataContextLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        _httpContextAccessor = httpContextAccessor;
+        _databaseConfig = databaseConfig.CurrentValue;
     }
 
     public DbSet<Place> Places { get; set; }
@@ -34,16 +42,17 @@
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        const string requester = "cpedalino";
+        var requester = _httpContextAccessor?.HttpContext?.User?.Claims?
+            .FirstOrDefault(x => x.Type == Const.UserIdClaim)?.Value;
 
         foreach (var entityEntry in ChangeTracker.Entries())
         {
             if (entityEntry.IsDelete())
-                entityEntry.SetDeleteAudit(requester);
+                entityEntry.SetDeleteAudit(requester ?? "No Requester");
             else if (entityEntry.IsUpdate())
-                entityEntry.SetUpdateAudit(requester);
+                entityEntry.SetUpdateAudit(requester ?? "No Requester");
             else if (entityEntry.IsNew())
-                entityEntry.SetCreateAudit(requester);
+                entityEntry.SetCreateAudit(requester ?? "No Requester");
         }
 
         return base.SaveChangesAsync(cancellationToken);

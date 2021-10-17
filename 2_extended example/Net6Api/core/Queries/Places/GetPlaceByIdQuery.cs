@@ -1,4 +1,4 @@
-﻿public record GetPlaceByIdQuery(Guid Id) : IRequest<GetPlaceResponse?> { }
+﻿public record GetPlaceByIdQuery(Guid Id) : IRequest<GetPlaceResponse?>, IApiKeyValidation { }
 
 
 public class GetPlaceByIdQueryHandler : IRequestHandler<GetPlaceByIdQuery, GetPlaceResponse?>

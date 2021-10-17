@@ -4,10 +4,10 @@
                                  uint Numeracion,
                                  string Latitud,
                                  string Longitud)
-    : IRequest<CommandResult>
+    : IRequest<CommandResponse>
 { }
 
-public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, CommandResult>
+public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IPlaceRepository _placeRepository;
@@ -18,15 +18,15 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Com
         _placeRepository = placeRepository;
     }
 
-    public async Task<CommandResult> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
         var entity = await _placeRepository.GetById(request.Id);
         if (entity is null)
-            return CommandResult.NotFound();
+            return CommandResponse.NotFound();
 
         entity = _mapper.Map<Place>(request);
         await _placeRepository.Update(entity);
 
-        return CommandResult.Success();
+        return CommandResponse.Success(CommandResponseHelper.UpdateMessage<Place>());
     }
 }

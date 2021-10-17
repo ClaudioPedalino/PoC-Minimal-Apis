@@ -12,7 +12,7 @@
             .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Phone))
             .ReverseMap();
 
-        CreateMap<CreatePersonCommand, People>()
+        CreateMap<CreatePeopleCommand, People>()
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Nombre))
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Apellido))
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Edad))
@@ -22,7 +22,7 @@
             .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefono))
             .ReverseMap();
 
-        CreateMap<UpdatePersonCommand, People>()
+        CreateMap<UpdatePeopleCommand, People>()
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Nombre))
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Apellido))
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Edad))

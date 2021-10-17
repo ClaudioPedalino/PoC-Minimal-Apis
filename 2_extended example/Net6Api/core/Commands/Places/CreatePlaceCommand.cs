@@ -3,10 +3,10 @@
                                  uint Numeracion,
                                  string Latitud,
                                  string Longitud)
-    : IRequest<CommandResult>
+    : IRequest<CommandResponse>
 { }
 
-public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, CommandResult>
+public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IPlaceRepository _placeRepository;
@@ -17,12 +17,13 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Com
         _placeRepository = placeRepository;
     }
 
-    public async Task<CommandResult> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Place>(request);
 
         await _placeRepository.Insert(entity);
 
-        return CommandResult.Success();
+        return CommandResponse.Success(
+            CommandResponseHelper.CreatedMessage<Place>($"{entity.Address} {entity.Numeration}, {entity.City}"));
     }
 }

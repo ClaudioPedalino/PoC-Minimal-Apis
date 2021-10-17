@@ -1,4 +1,4 @@
-﻿public record UpdatePersonCommand(Guid Id,
+﻿public record UpdatePeopleCommand(Guid Id,
                                   string Nombre,
                                   string Apellido,
                                   uint Edad,
@@ -6,10 +6,10 @@
                                   string Email,
                                   string AvatarUrl,
                                   string Telefono)
-    : IRequest<CommandResult>
+    : IRequest<CommandResponse>
 { }
 
-public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand, CommandResult>
+public class UpdatePersonCommandHandler : IRequestHandler<UpdatePeopleCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IPeopleRepository _peopleRepository;
@@ -20,15 +20,15 @@ public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand, C
         _peopleRepository = peopleRepository;
     }
 
-    public async Task<CommandResult> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(UpdatePeopleCommand request, CancellationToken cancellationToken)
     {
         var entity = await _peopleRepository.GetById(request.Id);
         if (entity is null)
-            return CommandResult.NotFound();
+            return CommandResponse.NotFound();
 
         entity = _mapper.Map<People>(request);
         await _peopleRepository.Update(entity);
 
-        return CommandResult.Success();
+        return CommandResponse.Success(CommandResponseHelper.UpdateMessage<People>());
     }
 }

@@ -1,27 +1,27 @@
-﻿public record CreatePersonCommand(string Nombre,
+﻿public record CreatePeopleCommand(string Nombre,
                                   string Apellido,
                                   uint Edad,
                                   DateTime FechaNacimiento,
                                   string Email,
                                   string AvatarUrl,
                                   string Telefono)
-    : IRequest<CommandResult>
+    : IRequest<CommandResponse>
 { }
 
-public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, CommandResult>
+public class CreatePeopleCommandHandler : IRequestHandler<CreatePeopleCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IPeopleRepository _peopleRepository;
     private readonly IValidator<People> _validator;
 
-    public CreatePersonCommandHandler(IMapper mapper, IPeopleRepository peopleRepository, IValidator<People> validator)
+    public CreatePeopleCommandHandler(IMapper mapper, IPeopleRepository peopleRepository, IValidator<People> validator)
     {
         _mapper = mapper;
         _peopleRepository = peopleRepository;
         _validator = validator;
     }
 
-    public async Task<CommandResult> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(CreatePeopleCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<People>(request);
         var validationResult = _validator.Validate(entity);
@@ -30,6 +30,7 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, C
 
         await _peopleRepository.Insert(entity);
 
-        return CommandResult.Success();
+        return CommandResponse.Success(
+            CommandResponseHelper.CreatedMessage<People>($"{entity.FirstName} {entity.LastName}"));
     }
 }

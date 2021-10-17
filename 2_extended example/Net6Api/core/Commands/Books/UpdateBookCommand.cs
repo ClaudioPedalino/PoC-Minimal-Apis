@@ -4,10 +4,10 @@
                                 string Genero,
                                 decimal Precio,
                                 uint CantidadPaginas)
-    : IRequest<CommandResult>
+    : IRequest<CommandResponse>
 { }
 
-public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, CommandResult>
+public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IBookRepository _bookRepository;
@@ -18,15 +18,15 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Comma
         _bookRepository = bookRepository;
     }
 
-    public async Task<CommandResult> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
         var entity = await _bookRepository.GetById(request.Id);
         if (entity is null)
-            return CommandResult.NotFound();
+            return CommandResponse.NotFound();
 
         entity = _mapper.Map<Book>(request);
         await _bookRepository.Update(entity);
 
-        return CommandResult.Success();
+        return CommandResponse.Success(CommandResponseHelper.UpdateMessage<Book>());
     }
 }

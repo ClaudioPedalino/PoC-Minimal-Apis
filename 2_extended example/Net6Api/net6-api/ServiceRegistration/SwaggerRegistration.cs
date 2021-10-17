@@ -1,49 +1,49 @@
 ﻿public static class SwaggerRegistration
 {
-
-    public static WebApplicationBuilder AddSwagger(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddSwagger(this WebApplicationBuilder builder, AppConfig appConfig)
     {
-        builder.Services.AddEndpointsApiExplorer();
-
-        builder.Services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Net 6 Api", Version = "v1" });
-
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        builder.Services
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen(c =>
             {
-                Description = "JWT Authorization header using the bearer scheme",
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
-            });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                c.SwaggerDoc(appConfig.Api.Version, new OpenApiInfo { Title = appConfig.Api.Name, Version = appConfig.Api.Version });
+                
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                    }
+                    Description = "JWT Authorization header using the bearer scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = appConfig.JwtSettings.TokenType
                 });
-        });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = appConfig.JwtSettings.TokenType
+                                },
+                                Scheme = "oauth2",
+                                Name = appConfig.JwtSettings.TokenType,
+                                In = ParameterLocation.Header,
+                            },
+                            new List<string>()
+                        }
+                    });
+            });
 
         return builder;
     }
 
-    public static WebApplication AddSwagger(this WebApplication app)
+    public static WebApplication AddSwagger(this WebApplication app, AppConfig appConfig)
     {
         app.UseSwagger();
         app.UseSwaggerUI(configuration =>
-            configuration.SwaggerEndpoint("/swagger/v1/swagger.json", $"Net 6 api"));
+            configuration.SwaggerEndpoint("/swagger/v1/swagger.json", appConfig.Api.Name));
+        app.MapFallback(() => Results.Redirect("/swagger"));
 
         return app;
     }

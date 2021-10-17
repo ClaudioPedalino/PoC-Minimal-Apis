@@ -1,6 +1,8 @@
-﻿public record GetAllPlaceQuery : IRequest<IEnumerable<GetPlaceResponse>>
+﻿public record GetAllPlaceQuery : IRequest<IEnumerable<GetPlaceResponse>>, IApiKeyValidation, ICacheable
 {
     public string CacheKey => $"{GetType().Name}";
+    public bool BypassCache { get; set; }
+    public TimeSpan? SlidingExpiration { get; set; }
 }
 
 public class GetAllPlaceQueryHandler : IRequestHandler<GetAllPlaceQuery, IEnumerable<GetPlaceResponse>>
@@ -14,12 +16,6 @@ public class GetAllPlaceQueryHandler : IRequestHandler<GetAllPlaceQuery, IEnumer
         _placeRepository = placeRepository;
     }
 
-    public async Task<IEnumerable<GetPlaceResponse>> Handle(GetAllPlaceQuery request, CancellationToken cancellationToken)
-    {
-        var result = await _placeRepository.GetAll();
-
-        var response = _mapper.Map<IEnumerable<GetPlaceResponse>>(result);
-
-        return response;
-    }
+    public async Task<IEnumerable<GetPlaceResponse>> Handle(GetAllPlaceQuery request, CancellationToken cancellationToken) =>
+        _mapper.Map<IEnumerable<GetPlaceResponse>>(await _placeRepository.GetAll());
 }

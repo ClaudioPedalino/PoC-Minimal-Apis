@@ -1,6 +1,6 @@
-﻿public record DeleteBookCommand(Guid Id) : IRequest<CommandResult> { }
+﻿public record DeleteBookCommand(Guid Id) : IRequest<CommandResponse> { }
 
-public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, CommandResult>
+public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, CommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IBookRepository _bookRepository;
@@ -11,8 +11,8 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Comma
         _bookRepository = bookRepository;
     }
 
-    public async Task<CommandResult> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         => await _bookRepository.Delete(request.Id)
-        ? CommandResult.Success()
-        : CommandResult.Error("Huno un problema al borrar el registro");
+        ? CommandResponse.Success(CommandResponseHelper.DeleteMessage<Book>())
+        : CommandResponse.Fail(CommandResponseHelper.DeleteErrorMessage<Book>());
 }

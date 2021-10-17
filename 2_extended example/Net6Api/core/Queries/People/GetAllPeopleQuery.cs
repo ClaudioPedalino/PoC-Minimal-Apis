@@ -1,6 +1,8 @@
-﻿public record GetAllPeopleQuery : IRequest<IEnumerable<GetPeopleResponse>>
+﻿public record GetAllPeopleQuery : IRequest<IEnumerable<GetPeopleResponse>>, IApiKeyValidation, ICacheable
 {
     public string CacheKey => $"{GetType().Name}";
+    public bool BypassCache { get; set; }
+    public TimeSpan? SlidingExpiration { get; set; }
 }
 
 public class GetAllPeopleQueryHandler : IRequestHandler<GetAllPeopleQuery, IEnumerable<GetPeopleResponse>>
@@ -15,11 +17,5 @@ public class GetAllPeopleQueryHandler : IRequestHandler<GetAllPeopleQuery, IEnum
     }
 
     public async Task<IEnumerable<GetPeopleResponse>> Handle(GetAllPeopleQuery request, CancellationToken cancellationToken)
-    {
-        var result = await _peopleRepository.GetAll();
-
-        var response = _mapper.Map<IEnumerable<GetPeopleResponse>>(result);
-
-        return response;
-    }
+        => _mapper.Map<IEnumerable<GetPeopleResponse>>(await _peopleRepository.GetAll());
 }

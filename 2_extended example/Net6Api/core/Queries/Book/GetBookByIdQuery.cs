@@ -1,4 +1,4 @@
-﻿public record GetBookByIdQuery(Guid Id) : IRequest<GetBookResponse?> { }
+﻿public record GetBookByIdQuery(Guid Id) : IRequest<GetBookResponse?>, IApiKeyValidation { }
 
 
 public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, GetBookResponse?>

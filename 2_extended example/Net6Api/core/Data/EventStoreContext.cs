@@ -2,10 +2,8 @@
 {
     private readonly DatabaseConfig _databaseConfig;
 
-    public EventStoreContext()
-    {
+    public EventStoreContext() { }
 
-    }
     public EventStoreContext(DbContextOptions<EventStoreContext> options,
                              IOptionsMonitor<DatabaseConfig> databaseConfig) : base(options)
     {

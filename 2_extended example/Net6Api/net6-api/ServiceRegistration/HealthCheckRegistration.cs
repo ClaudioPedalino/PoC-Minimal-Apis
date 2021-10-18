@@ -26,8 +26,6 @@
 
     public static WebApplication UseHealthCheck(this WebApplication app, AppConfig appConfig)
     {
-        app.UseRouting();
-
         app.UseEndpoints(config =>
         {
             config.MapHealthChecksUI();

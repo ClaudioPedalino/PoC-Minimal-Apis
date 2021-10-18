@@ -37,6 +37,10 @@
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<People>().HasQueryFilter(x => !x.IsDelete);
+        modelBuilder.Entity<Book>().HasQueryFilter(x => !x.IsDelete);
+        modelBuilder.Entity<Place>().HasQueryFilter(x => !x.IsDelete);
+
         // TODO: Faltan los entity model builders
         base.OnModelCreating(modelBuilder);
     }
@@ -46,14 +50,18 @@
         var requester = _httpContextAccessor?.HttpContext?.User?.Claims?
             .FirstOrDefault(x => x.Type == Const.UserIdClaim)?.Value;
 
-        foreach (var entityEntry in ChangeTracker.Entries())
+        var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (
+                e.State == EntityState.Added
+                || e.State == EntityState.Modified
+                || e.State == EntityState.Deleted));
+
+        foreach (var entityEntry in entries)
         {
-            if (entityEntry.IsDelete())
-                entityEntry.SetDeleteAudit(requester ?? "No Requester");
-            else if (entityEntry.IsUpdate())
-                entityEntry.SetUpdateAudit(requester ?? "No Requester");
-            else if (entityEntry.IsNew())
-                entityEntry.SetCreateAudit(requester ?? "No Requester");
+            entityEntry.SetDate();
+
+            if (entityEntry.IsUpdate()) entityEntry.SetUpdateInfo(requester);
+            else if (entityEntry.IsNew()) entityEntry.SetCreateInfo(requester);
+            else if (entityEntry.IsDelete()) entityEntry.SetDeleteInfo(requester);
         }
 
         return base.SaveChangesAsync(cancellationToken);

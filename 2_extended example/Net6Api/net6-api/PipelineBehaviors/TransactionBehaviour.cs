@@ -26,6 +26,7 @@
                 await _dbContext.BeginTransactionAsync(cancellationToken);
 
                 response = await next();
+
                 _eventContext.AddEvent(typeof(TRequest).Name);
                 await _dbContext.CommitTransactionAsync(cancellationToken);
                 _logger.LogInformation($"End transaction: {typeof(TRequest).Name}.");

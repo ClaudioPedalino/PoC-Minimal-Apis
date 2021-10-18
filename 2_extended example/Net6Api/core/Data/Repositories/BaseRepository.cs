@@ -11,31 +11,24 @@
         entities = dataContext.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
-        => await Task.FromResult(entities
-        .Where(x => !x.IsDelete)
-        .AsNoTracking());
+    public async Task<IEnumerable<TEntity>> GetAll() =>
+        await Task.FromResult(entities.AsNoTracking());
 
-    public async Task<TEntity> GetById(Guid id)
-        => await entities
-        .AsNoTracking()
-        .FirstOrDefaultAsync(entity => entity.Id == id);
+    public async Task<TEntity> GetById(Guid id) =>
+        await entities.AsNoTracking()
+            .FirstOrDefaultAsync(entity => entity.Id == id);
 
-    public async Task Insert(TEntity entity)
-        => await entities.AddAsync(entity);
+    public async Task Insert(TEntity entity) =>
+        await entities.AddAsync(entity);
 
-    public async Task Update(TEntity entity)
-        => entities.Update(entity);
+    public async Task Update(TEntity entity) =>
+        entities.Update(entity);
 
     public async Task<bool> Delete(Guid id)
     {
         TEntity entity = await entities.FirstOrDefaultAsync(entity => entity.Id == id);
         if (entity is not null)
         {
-            entity.IsDelete = true;
-            //_dataContext.Entry(entity).State = EntityState.Deleted;
-            //entities.Update(entity);
-
             entities.Remove(entity);
             return true;
         }

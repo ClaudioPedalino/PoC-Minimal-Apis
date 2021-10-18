@@ -113,6 +113,7 @@ app.AddPlaceEndpoints();
 
 
 ///app.UseMiddleware<RequestResponseLoggingMiddleware>();
+app.UseRouting();
 app.UseIpRateLimiting();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseApiVersioning();

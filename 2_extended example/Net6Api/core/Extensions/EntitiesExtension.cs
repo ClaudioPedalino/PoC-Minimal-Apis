@@ -1,5 +1,7 @@
 ﻿public static class EntitiesExtension
 {
+    private const string DEFAULT_REQUESTER = "_";
+
     public static bool IsNew(this EntityEntry entityEntry)
         => entityEntry.State == EntityState.Added;
 
@@ -9,36 +11,25 @@
     public static bool IsDelete(this EntityEntry entityEntry)
         => entityEntry.State == EntityState.Deleted;
 
-    public static void SetLastModificationAt(this EntityEntry entityEntry)
+    public static void SetDate(this EntityEntry entityEntry)
+        => ((BaseEntity)entityEntry.Entity).LastModificationAt = DateTimeHelper.GetSystemDate();
+
+    public static void SetDeleteInfo(this EntityEntry entityEntry, string? requester)
     {
-        entityEntry.Entity.GetType().GetProperties().FirstOrDefault(x => x.Name == "LastModificationAt")?
-                          .SetValue(entityEntry.Entity, DateTimeHelper.GetSystemDate());
+        entityEntry.State = EntityState.Modified;
+        ((BaseEntity)entityEntry.Entity).IsDelete = true;
+        ((BaseEntity)entityEntry.Entity).DeleteBy = requester ?? DEFAULT_REQUESTER;
     }
 
-    public static void SetCreateAudit(this EntityEntry entityEntry, string createBy)
+    public static void SetCreateInfo(this EntityEntry entityEntry, string? requester)
     {
-        entityEntry.Entity.GetType().GetProperties().FirstOrDefault(x => x.Name == "CreateBy")?
-                          .SetValue(entityEntry.Entity, createBy);
-
-        entityEntry.SetLastModificationAt();
+        ((BaseEntity)entityEntry.Entity).CreateBy = requester ?? DEFAULT_REQUESTER;
     }
 
-    public static void SetUpdateAudit(this EntityEntry entityEntry, string updateBy)
+    public static void SetUpdateInfo(this EntityEntry entityEntry, string? requester)
     {
-        entityEntry.Entity.GetType().GetProperties().FirstOrDefault(x => x.Name == "UpdateBy")?
-                          .SetValue(entityEntry.Entity, updateBy);
-
-        entityEntry.SetLastModificationAt();
-    }
-
-    public static void SetDeleteAudit(this EntityEntry entityEntry, string deleteBy)
-    {
-        entityEntry.Entity.GetType().GetProperties().FirstOrDefault(x => x.Name == "DeleteBy")?
-                          .SetValue(entityEntry.Entity, deleteBy);
-
-        entityEntry.Entity.GetType().GetProperties().FirstOrDefault(x => x.Name == "IsDelete")?
-                          .SetValue(entityEntry.Entity, true);
-
-        entityEntry.SetLastModificationAt();
+        var originalValues = entityEntry.GetDatabaseValues();
+        ((BaseEntity)entityEntry.Entity).CreateBy = originalValues.GetValue<string>(nameof(BaseEntity.CreateBy));
+        ((BaseEntity)entityEntry.Entity).UpdateBy = requester ?? DEFAULT_REQUESTER;
     }
 }

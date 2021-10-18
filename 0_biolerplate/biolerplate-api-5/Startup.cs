@@ -28,7 +28,6 @@ namespace biolerplate_api_5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet
             });
         }
     }

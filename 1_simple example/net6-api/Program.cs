@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IDeveloperService, DeveloperService>();
 builder.Services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+
 builder.Services.AddDbContext<DataContext>(opt
     => opt.UseSqlServer(Config.Database));
 
@@ -16,11 +17,11 @@ app.MapGet("/api/devs", async ([FromServices] IDeveloperService service)
 
 app.MapPost("/api/devs", async ([FromServices] IDeveloperService service, DeveloperDto command) =>
 {
-    var result = await service.CreateAsync(command);
+    var response = await service.CreateAsync(command);
 
-    return result.HasErrors
-        ? Results.BadRequest(result)
-        : Results.NoContent();
+    return response.HasErrors
+        ? Results.BadRequest(response)
+        : Results.Ok(response);
 });
 
 app.UseSwagger();

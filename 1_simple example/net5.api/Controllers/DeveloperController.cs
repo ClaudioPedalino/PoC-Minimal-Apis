@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace net5.api.Controllers
 {
     [ApiController]
-    [Route("api/developers")]
+    [Route("api/devs")]
     public class DeveloperController : ControllerBase
     {
         private readonly IDeveloperService _developerService;

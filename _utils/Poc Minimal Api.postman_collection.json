@@ -1,0 +1,1364 @@
+{
+	"info": {
+		"_postman_id": "5f8894bc-c6c1-4f86-9cd4-532606f249ca",
+		"name": "Poc Minimal Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DummyCrud",
+			"item": [
+				{
+					"name": "GetAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl-simple}}/api/mocks",
+							"host": [
+								"{{baseUrl-simple}}"
+							],
+							"path": [
+								"api",
+								"mocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-simple}}/api/mocks/:mockId",
+							"host": [
+								"{{baseUrl-simple}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								":mockId"
+							],
+							"variable": [
+								{
+									"key": "mockId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"{{$randomWord}}\",\r\n    \"value\": \"{{$randomBitcoin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl-simple}}/api/mocks",
+							"host": [
+								"{{baseUrl-simple}}"
+							],
+							"path": [
+								"api",
+								"mocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-simple}}/api/mocks/:mockId",
+							"host": [
+								"{{baseUrl-simple}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								":mockId"
+							],
+							"variable": [
+								{
+									"key": "mockId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-simple}}/api/mocks/:mockId",
+							"host": [
+								"{{baseUrl-simple}}"
+							],
+							"path": [
+								"api",
+								"mocks",
+								":mockId"
+							],
+							"variable": [
+								{
+									"key": "mockId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Simple",
+			"item": [
+				{
+					"name": "Net5 - Api",
+					"item": [
+						{
+							"name": "get all devs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{net5-api}}/api/devs",
+									"host": [
+										"{{net5-api}}"
+									],
+									"path": [
+										"api",
+										"devs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create devs",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"{{$randomFirstName}}\",\r\n  \"apellido\": \"{{$randomLastName}}\",\r\n  \"edad\": \"{{$randomInt}}\",\r\n  \"sueldo\": {{$randomPrice}},\r\n  \"experiencia\": {{$randomInt}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net5-api}}/api/devs",
+									"host": [
+										"{{net5-api}}"
+									],
+									"path": [
+										"api",
+										"devs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Net 6 - Minimal Api",
+					"item": [
+						{
+							"name": "get all devs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{net6-api}}/api/devs",
+									"host": [
+										"{{net6-api}}"
+									],
+									"path": [
+										"api",
+										"devs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create devs",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"{{$randomFirstName}}\",\r\n  \"apellido\": \"{{$randomLastName}}\",\r\n  \"edad\": \"{{$randomInt}}\",\r\n  \"sueldo\": {{$randomPrice}},\r\n  \"experiencia\": {{$randomInt}}\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-api}}/api/devs",
+									"host": [
+										"{{net6-api}}"
+									],
+									"path": [
+										"api",
+										"devs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Extended",
+			"item": [
+				{
+					"name": "People",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people/:id",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6df6e351-555d-4571-c48a-08d991c9a362"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"function getRandomDate(start, end) {\r",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+											"}\r",
+											"\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"age\", getRandomInt(16, 70));\r",
+											"\r",
+											"pm.globals.set(\"birthdate\", getRandomDate(new Date(1950, 0, 1),     new Date(2005, 0, 1)    )    .toISOString());\r",
+											"\r",
+											"pm.globals.set(\"photoUrl\", `https://i.pravatar.cc/150?img=` + getRandomInt(1,70));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"{{$randomFirstName}}\",\r\n    \"apellido\": \"{{$randomLastName}}\",\r\n    \"edad\": {{age}},\r\n    \"fechaNacimiento\": \"{{birthdate}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"avatarUrl\": \"{{photoUrl}}\",\r\n    \"telefono\": \"{{$randomPhoneNumber}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"function getRandomDate(start, end) {\r",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+											"}\r",
+											"\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"age\", getRandomInt(16, 70));\r",
+											"\r",
+											"pm.globals.set(\"birthdate\", getRandomDate(new Date(1950, 0, 1),     new Date(2005, 0, 1)    )    .toISOString());\r",
+											"\r",
+											"pm.globals.set(\"photoUrl\", `https://i.pravatar.cc/150?img=` + getRandomInt(1,70));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"32e6a14d-e96c-4515-3483-08d9905fa1b1\",\r\n    \"nombre\": \"updated {{$randomFirstName}}\",\r\n    \"apellido\": \"updated {{$randomLastName}}\",\r\n    \"edad\": {{age}},\r\n    \"fechaNacimiento\": \"{{birthdate}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"avatarUrl\": \"{{photoUrl}}\",\r\n    \"telefono\": \"{{$randomPhoneNumber}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"d0126d69-14d7-4cf9-c48b-08d991c9a360\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Books",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books/:id",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8ca3d355-be38-46f6-b868-08d9906062a5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"price\", getRandomInt(250, 4500));\r",
+											"\r",
+											"pm.globals.set(\"totalPages\", getRandomInt(80, 1770));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"{{$randomJobTitle}}\",\r\n    \"autor\": \"{{$randomFullName}}\",\r\n    \"genero\": \"{{$randomWord}}\",\r\n    \"precio\": {{price}},\r\n    \"cantidadPaginas\": {{totalPages}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"price\", getRandomInt(250, 4500));\r",
+											"\r",
+											"pm.globals.set(\"totalPages\", getRandomInt(80, 1770));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"8ca3d355-be38-46f6-b868-08d9906062a5\",\r\n    \"titulo\": \"updated {{$randomJobTitle}}\",\r\n    \"autor\": \"updated {{$randomFullName}}\",\r\n    \"genero\": \"{{$randomWord}}\",\r\n    \"precio\": {{price}},\r\n    \"cantidadPaginas\": {{totalPages}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"8ca3d355-be38-46f6-b868-08d9906062a5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Places",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/v1/places",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"places"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/places/:id",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"places",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "773a32f9-5ecb-4f0c-9412-08d9906bf60f"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ciudad\": \"{{$randomCity}}\",\r\n    \"direccion\": \"{{$randomStreetName}}\",\r\n    \"numeracion\": {{$randomInt}},\r\n    \"latitud\": \"{{$randomLatitude}}\",\r\n    \"longitud\": \"{{$randomLongitude}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/places",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"places"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"773a32f9-5ecb-4f0c-9412-08d9906bf60f\",\r\n    \"ciudad\": \"{{$randomCity}}\",\r\n    \"direccion\": \"{{$randomStreetName}}\",\r\n    \"numeracion\": {{$randomInt}},\r\n    \"latitud\": \"{{$randomLatitude}}\",\r\n    \"longitud\": \"{{$randomLongitude}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/places",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"places"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"773a32f9-5ecb-4f0c-9412-08d9906bf60f\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/places",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"places"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "get all users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/users",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"cpedalino@test.com\",\r\n    \"password\": \"Pepe123#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/users/login",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"claudio\",\r\n    \"lastName\": \"pedalino\",\r\n    \"email\": \"cpedalino@test1.com\",\r\n    \"password\": \"Pepe123#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/users/register",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "_all_good",
+					"item": [
+						{
+							"name": "get all test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create test",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"function getRandomDate(start, end) {\r",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+											"}\r",
+											"\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"age\", getRandomInt(16, 70));\r",
+											"\r",
+											"pm.globals.set(\"birthdate\", getRandomDate(new Date(1950, 0, 1),     new Date(2005, 0, 1)    )    .toISOString());\r",
+											"\r",
+											"pm.globals.set(\"photoUrl\", `https://i.pravatar.cc/150?img=` + getRandomInt(1,70));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"{{$randomFirstName}}\",\r\n    \"apellido\": \"{{$randomLastName}}\",\r\n    \"edad\": {{age}},\r\n    \"fechaNacimiento\": \"{{birthdate}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"avatarUrl\": \"{{photoUrl}}\",\r\n    \"telefono\": \"{{$randomPhoneNumber}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/people",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create test",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"price\", getRandomInt(250, 4500));\r",
+											"\r",
+											"pm.globals.set(\"totalPages\", getRandomInt(80, 1770));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"{{$randomJobTitle}}\",\r\n    \"autor\": \"{{$randomFullName}}\",\r\n    \"genero\": \"{{$randomWord}}\",\r\n    \"precio\": {{price}},\r\n    \"cantidadPaginas\": {{totalPages}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "{{api-key-name}}",
+										"value": "{{api-key-value}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create test",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/* DATA AND FUNCTIONS */\r",
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min)) + min;\r",
+											"}\r",
+											"/* SETTINGS VARIABLES */\r",
+											"\r",
+											"pm.globals.set(\"price\", getRandomInt(250, 4500));\r",
+											"\r",
+											"pm.globals.set(\"totalPages\", getRandomInt(80, 1770));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"titulo\": \"{{$randomJobTitle}}\",\r\n    \"autor\": \"{{$randomFullName}}\",\r\n    \"genero\": \"{{$randomWord}}\",\r\n    \"precio\": {{price}},\r\n    \"cantidadPaginas\": {{totalPages}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/books",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all users test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{minimal-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{net6-extender-api}}/api/users",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"Pepe123#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{net6-extender-api}}/api/users/register",
+									"host": [
+										"{{net6-extender-api}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "net5-api",
+			"value": "https://localhost:44300"
+		},
+		{
+			"key": "net6-api",
+			"value": "https://localhost:7014"
+		},
+		{
+			"key": "net6-extender-api",
+			"value": "https://localhost:7333"
+		},
+		{
+			"key": "minimal-token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjcGVkYWxpbm9AdGVzdDEuY29tIiwianRpIjoiZjJlOWZiMjAtYjQzMC00ZTBmLTlhNmEtM2ViMzFhNTRkNzlkIiwiYXV0aF90aW1lIjoiMTAvMTcvMjAyMSIsImVtYWlsIjoiY3BlZGFsaW5vQHRlc3QxLmNvbSIsImlkIjoiMTFmYzgyMzEtZDhiMS00MDIwLWI3MTUtMTE5YmI0NjY3MTFkIiwiY3JlYXRlZEF0IjoiMTAvMTcvMjAyMSA5OjU5OjUwIFBNIiwibmJmIjoxNjM0NTE4NzkwLCJleHAiOjE2MzQ1NjE5OTAsImlhdCI6MTYzNDUxODc5MH0.cfxu-YOyvTDFOsq50xQioYpMJBa8tbdiycEVD16EOsw"
+		},
+		{
+			"key": "api-key-name",
+			"value": "Minimal-Api-Key"
+		},
+		{
+			"key": "api-key-value",
+			"value": "BossaLaGoza#"
+		}
+	]
+}

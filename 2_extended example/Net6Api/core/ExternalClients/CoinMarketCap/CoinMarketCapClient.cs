@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-
-public class CoinMarketCapClient
+﻿public class CoinMarketCapClient
 {
-    private HttpClient _client;
+    private readonly HttpClient _client;
 
     public CoinMarketCapClient(HttpClient client)
     {

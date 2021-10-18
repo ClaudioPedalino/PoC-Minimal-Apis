@@ -1,5 +1,5 @@
 ﻿public record RegisterUserCommand(string FirstName, string LastName, string Email, string Password)
-    : IRequest<AuthenticationResult>
+    : IRequest<AuthenticationResult>, ITransactionable
 { }
 
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, AuthenticationResult>

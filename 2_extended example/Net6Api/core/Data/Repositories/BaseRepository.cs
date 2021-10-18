@@ -1,7 +1,7 @@
 ﻿public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity, new()
 {
     private readonly DataContext _dataContext;
-    private DbSet<TEntity> entities;
+    private readonly DbSet<TEntity> entities;
 
     public BaseRepository(DataContext dataContext)
     {
@@ -26,13 +26,13 @@
     public async Task Insert(TEntity entity)
     {
         await entities.AddAsync(entity);
-        await _dataContext.SaveChangesAsync();
+        //await _dataContext.SaveChangesAsync();
     }
 
     public async Task Update(TEntity entity)
     {
         entities.Update(entity);
-        await _dataContext.SaveChangesAsync();
+        //await _dataContext.SaveChangesAsync();
     }
 
     public async Task<bool> Delete(Guid id)
@@ -45,7 +45,7 @@
             //entities.Update(entity);
 
             entities.Remove(entity);
-            await _dataContext.SaveChangesAsync();
+            //await _dataContext.SaveChangesAsync();
             return true;
         }
         return false;

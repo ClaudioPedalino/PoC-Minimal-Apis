@@ -6,7 +6,7 @@ const string ServerUrl = "https://localhost:7333/live";
 await using var connection = new HubConnectionBuilder().WithUrl(ServerUrl).Build();
 await connection.StartAsync();
 
-await foreach(var date in connection.StreamAsync<CoinMarketCapResponse>("Streaming"))
+await foreach (var date in connection.StreamAsync<CoinMarketCapResponse>("Streaming"))
 {
     PrintGainers(date.Data.GainerList.ConvertAll(coin => new CoinVariance(coin)));
 }

@@ -11,8 +11,8 @@
         #region [3] [AÑADIR ATRIBUTOS]
         //app.MapDelete("api/people/with-produces-attribute",
         //    [ProducesResponseType(204)]
-        //[ProducesResponseType(404, Type = typeof(CommandResult))]
-        //async ([FromServices] IMediator _mediator, DeletePersonCommand command) =>
+        //[ProducesResponseType(404, Type = typeof(CommandResponse))]
+        //async ([FromServices] IMediator _mediator, DeletePeopleCommand command) =>
         //{
         //    var result = await _mediator.Send(command);
 
@@ -23,7 +23,7 @@
 
         #region [4] [Algunos atirbutos tienen ahora un método fluent para definirse]
         /// Como los Produces y demás métodos que interactuan con OpenApi
-        
+
         //app.MapGet("api/people", GetAll)
         //    .Produces<IEnumerable<GetBookResponse>>(200);
 
@@ -70,11 +70,21 @@
         #endregion
     }
 
-    public static async Task<IResult> GetAll([FromServices] IMediator _mediator) =>
-        Results.Ok(await _mediator.Send(new GetAllPeopleQuery()));
+    public static async Task<IResult> GetAll([FromServices] IMediator _mediator)
+    {
+        var result = await _mediator.Send(new GetAllPeopleQuery());
+        return result == default
+            ? Results.NotFound()
+            : Results.Ok(result);
+    }
 
-    public static async Task<IResult> GetById([FromServices] IMediator _mediator, Guid id) =>
-        Results.Ok(await _mediator.Send(new GetPeopleByIdQuery(id)));
+    public static async Task<IResult> GetById([FromServices] IMediator _mediator, Guid id)
+    {
+        var result = await _mediator.Send(new GetPeopleByIdQuery(id));
+        return result == default
+            ? Results.NoContent()
+            : Results.Ok(result);
+    }
 
     public static async Task<IResult> Create([FromServices] IMediator _mediator, CreatePeopleCommand command)
     {

@@ -1,12 +1,12 @@
 ﻿public class ErrorHandlerMiddleware
 {
     private readonly RequestDelegate _next;
-    
+
     public ErrorHandlerMiddleware(RequestDelegate next)
     {
         _next = next;
     }
-    
+
     public async Task Invoke(HttpContext context)
     {
         try
@@ -20,9 +20,9 @@
             var responseModel = ApiResponse<string>.Fail(error.Message);
             response.StatusCode = error switch
             {
-                ApiKeyException => (int)HttpStatusCode.Unauthorized,
                 CustomException => (int)HttpStatusCode.BadRequest,
                 ValidationException => (int)HttpStatusCode.BadRequest,
+                //ApiKeyException => (int)HttpStatusCode.Unauthorized,
                 _ => (int)HttpStatusCode.InternalServerError,
             };
 

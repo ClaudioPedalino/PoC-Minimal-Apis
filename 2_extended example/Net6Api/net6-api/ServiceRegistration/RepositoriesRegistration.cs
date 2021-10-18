@@ -8,7 +8,7 @@
             .AddTransient<IPlaceRepository, PlaceRepository>()
             .AddTransient<IBookRepository, BookRepository>()
             .AddTransient<IUserRepository, UserRepository>();
-        
+
         return builder;
     }
 }

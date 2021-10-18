@@ -1,4 +1,4 @@
-﻿public record DeletePlaceCommand(Guid Id) : IRequest<CommandResponse> { }
+﻿public record DeletePlaceCommand(Guid Id) : IRequest<CommandResponse>, ITransactionable { }
 
 public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, CommandResponse>
 {

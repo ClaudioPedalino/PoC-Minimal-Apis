@@ -11,8 +11,10 @@
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="5.0.3" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
+		<PackageReference Include="AspNetCoreRateLimit" Version="4.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="10.3.3" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.3" />
@@ -31,6 +33,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.11" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.11" />
 		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
 		<PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
@@ -38,9 +41,16 @@
 		<PackageReference Include="Serilog" Version="2.10.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+		<Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\core\net6.core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Protos\greet.proto">
+			<GrpcServices>Server</GrpcServices>
+		</None>
 	</ItemGroup>
 </Project>

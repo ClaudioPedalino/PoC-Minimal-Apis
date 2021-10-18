@@ -1,32 +1,37 @@
-var builder = WebApplication.CreateBuilder(args);
+using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
+var builder = WebApplication.CreateBuilder(args);
 AppConfig appConfig = builder.GetConfiguration();
 
 //builder.AddHealthCheck(appConfig);
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<CoinMarketCapClient>(client =>
-{
-    client.BaseAddress = new Uri(appConfig.CoinMarketCap);
-    client.DefaultRequestHeaders.Add("CMC_PRO_API_KEY", "ab44c081-2555-4c67-962d-2169b4ccc7d9");
-    client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36");
-});
-
+builder.AddRateLimit();
 builder.AddIdentity(appConfig);
 builder.AddDatabase(appConfig);
+builder.AddBuiltInLibs();
 builder.AddLogging();
+builder.AddClients(appConfig);
 builder.AddLibs();
 builder.AddServices();
 builder.AddRepositories();
+builder.Services.AddGrpc();
 builder.AddSwagger(appConfig);
 
 builder.Services.AddApiVersioning(options =>
 {
+    options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0);
+    //options.ApiVersionReader = new HeaderApiVersionReader("minimal-api-version");
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+
+    //options.Conventions.Controller<Anycontroller>(configuration);
+    options.ReportApiVersions = true;
 });
 
 var app = builder.Build();
-
+//app.MapGrpcService<GreeterService>();
+//app.MapGet("/grpc", () =>
+//    "Communication with gRPC endpoints must be made through a gRPC client");
 
 #region [1] Bloating Endpoints
 //#region People Endpoints
@@ -36,19 +41,19 @@ var app = builder.Build();
 //app.MapGet("api/people/{id}", async ([FromServices] IMediator _mediator, Guid id)
 //    => Results.Ok(await _mediator.Send(new GetPeopleByIdQuery(id))));
 
-//app.MapPost("api/people", async ([FromServices] IMediator _mediator, CreatePersonCommand command) =>
+//app.MapPost("api/people", async ([FromServices] IMediator _mediator, CreatePeopleCommand command) =>
 //{
 //    var response = await _mediator.Send(command);
 //    return response.HasErrors ? Results.BadRequest() : Results.NoContent();
 //});
 
-//app.MapPut("api/people", async ([FromServices] IMediator _mediator, UpdatePersonCommand command) =>
+//app.MapPut("api/people", async ([FromServices] IMediator _mediator, UpdatePeopleCommand command) =>
 //{
 //    var response = await _mediator.Send(command);
 //    return response.HasErrors ? Results.BadRequest() : Results.NoContent();
 //});
 
-//app.MapDelete("api/people", async ([FromServices] IMediator _mediator, DeletePersonCommand command) =>
+//app.MapDelete("api/people", async ([FromServices] IMediator _mediator, DeletePeopleCommand command) =>
 //{
 //    var response = await _mediator.Send(command);
 //    return response.HasErrors ? Results.BadRequest() : Results.NoContent();
@@ -81,8 +86,13 @@ var app = builder.Build();
 //});
 //#endregion
 //#region Places Endpoints
-//app.MapGet("api/places", async ([FromServices] IMediator _mediator)
-//    => Results.Ok(await _mediator.Send(new GetAllPlaceQuery())));
+//app.MapGet("api/v{version:apiVersion}/places",
+//    //[ApiVersion("1.0")]
+//    //[ApiVersion("2.0")]
+//    [MapToApiVersion("1.0")]
+//[ProducesResponseType(typeof(IEnumerable<GetPlaceResponse>), 203)]
+//async ([FromServices] IMediator _mediator) =>
+//    Results.Ok(await _mediator.Send(new GetAllPlaceQuery())));
 
 //app.MapGet("api/places/{id}", async ([FromServices] IMediator _mediator, Guid id)
 //    => Results.Ok(await _mediator.Send(new GetPlaceByIdQuery(id))));
@@ -107,26 +117,31 @@ var app = builder.Build();
 //#endregion
 #endregion
 
-#region [2] 
+#region [2] Edpoint definitions
 app.AddUserEndpoints();
 app.AddPeopleEndpoints();
 app.AddBookEndpoints();
 app.AddPlaceEndpoints();
 #endregion
+#region [6] Regisrar todos los endpoints juntos
+//app.UseEndpointDefinition();
+#endregion
 
-//[6] app.UseEndpointDefinition();
 
 ///app.UseMiddleware<RequestResponseLoggingMiddleware>();
+app.UseIpRateLimiting();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseApiVersioning();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseFluentValidationExceptionHandler();
-app.MapHub<MyHub>("/live");
+app.MapHub<CriptoHub>("/live");
 app.AddSwagger(appConfig);
 //app.UseHealthCheck(appConfig);
-
-NotifierHelper.NotifierHelperConfigure(app.Services.GetService<INotifierService>());
 app.UseMiniProfiler();
+
+CommandHelper.NotifierHelperConfigure(
+    app.Services.GetService<INotifierService>(),
+    app.Services.GetService<IDistributedCache>());
 
 app.Run();

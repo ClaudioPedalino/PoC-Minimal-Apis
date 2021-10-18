@@ -2,7 +2,7 @@
 {
     public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ILogger>(opt =>
+        builder.Services.AddSingleton<ILogger>(_ =>
         {
             return new LoggerConfiguration()
                 .WriteTo.Console()

@@ -1,4 +1,4 @@
-﻿public class GetPlaceResponse
+﻿public class GetPlaceResponse : IQueryResponse
 {
     public Guid Id { get; set; }
     public string Ciudad { get; set; }

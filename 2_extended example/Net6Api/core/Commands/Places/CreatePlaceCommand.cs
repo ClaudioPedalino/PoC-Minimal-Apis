@@ -3,7 +3,7 @@
                                  uint Numeracion,
                                  string Latitud,
                                  string Longitud)
-    : IRequest<CommandResponse>
+    : IRequest<CommandResponse>, ITransactionable
 { }
 
 public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, CommandResponse>

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-public class CoinMarketCapResponse
+﻿public class CoinMarketCapResponse
 {
     [JsonProperty("data")]
     public Data Data { get; set; }

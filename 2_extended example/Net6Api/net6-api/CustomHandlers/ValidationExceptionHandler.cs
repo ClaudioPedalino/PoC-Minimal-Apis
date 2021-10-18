@@ -16,7 +16,7 @@
                     return;
                 }
 
-                if (!(exception is ValidationException validationException))
+                if (exception is not ValidationException validationException)
                 {
                     throw exception;
                 }

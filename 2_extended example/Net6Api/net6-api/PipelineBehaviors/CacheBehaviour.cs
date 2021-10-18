@@ -1,10 +1,10 @@
-﻿public class CachingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheable
+﻿public class CacheBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheable
 {
     private readonly IDistributedCache _cache;
     private readonly ILogger _logger;
     private readonly CacheSetting _cacheSetting;
 
-    public CachingBehaviour(IDistributedCache cache, ILogger logger, IOptionsMonitor<CacheSetting> cacheSetting)
+    public CacheBehaviour(IDistributedCache cache, ILogger logger, IOptionsMonitor<CacheSetting> cacheSetting)
     {
         _cache = cache;
         _logger = logger;

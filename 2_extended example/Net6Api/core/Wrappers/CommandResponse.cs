@@ -12,7 +12,12 @@
     public static CommandResponse Success(string message = "")
     {
         if (!string.IsNullOrWhiteSpace(message))
-            NotifierHelper.Notify(message);
+            CommandHelper.Notify(message);
+
+        CommandHelper.Clean("GetAllPeopleQuery");
+        CommandHelper.Clean("GetAllBookQuery");
+        CommandHelper.Clean("GetAllPlaceQuery");
+
 
         return new() { HasErrors = false, Message = message };
     }

@@ -3,7 +3,7 @@
                                 string Genero,
                                 decimal Precio,
                                 uint CantidadPaginas)
-    : IRequest<CommandResponse>
+    : IRequest<CommandResponse>, ITransactionable
 { }
 
 public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, CommandResponse>

@@ -46,30 +46,14 @@
     public static async Task<IResult> GetById([FromServices] IMediator _mediator, Guid id) =>
         Results.Ok(await _mediator.Send(new GetBookByIdQuery(id)));
 
-    public static async Task<IResult> Create([FromServices] IMediator _mediator, CreateBookCommand command)
-    {
-        var response = await _mediator.Send(command);
-        return response.HasErrors
-            ? Results.BadRequest(response)
-            : Results.Accepted(value: response);
-    }
+    public static async Task<IResult> Create([FromServices] IMediator _mediator, CreateBookCommand command) =>
+        await _mediator.CommandHandler(command);
 
-    public static async Task<IResult> Update([FromServices] IMediator _mediator, UpdateBookCommand command)
-    {
+    public static async Task<IResult> Update([FromServices] IMediator _mediator, UpdateBookCommand command) =>
+        await _mediator.CommandHandler(command);
 
-        var response = await _mediator.Send(command);
-        return response.HasErrors
-            ? Results.BadRequest(response)
-            : Results.Accepted(value: response);
-    }
-
-    public static async Task<IResult> Delete([FromServices] IMediator _mediator, DeleteBookCommand command)
-    {
-        var response = await _mediator.Send(command);
-        return response.HasErrors
-            ? Results.BadRequest(response)
-            : Results.Accepted(value: response);
-    }
+    public static async Task<IResult> Delete([FromServices] IMediator _mediator, DeleteBookCommand command) =>
+        await _mediator.CommandHandler(command);
 }
 
 #region [8] Crear Fluent Custom Config

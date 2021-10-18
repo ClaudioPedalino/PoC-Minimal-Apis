@@ -7,7 +7,7 @@
             .AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(appConfig.Api.Version, new OpenApiInfo { Title = appConfig.Api.Name, Version = appConfig.Api.Version });
-                
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the bearer scheme",

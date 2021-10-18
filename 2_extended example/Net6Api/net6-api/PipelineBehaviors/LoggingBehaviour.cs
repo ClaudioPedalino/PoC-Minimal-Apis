@@ -17,9 +17,9 @@
             object propValue = prop.GetValue(request, null);
             _logger.LogInformation("{Property} : {@Value}", prop.Name, propValue);
         }
-        
+
         var response = await next();
-        
+
         _logger.LogInformation($"Handled {typeof(TResponse).Name}");
         return response;
     }

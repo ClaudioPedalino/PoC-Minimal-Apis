@@ -5,7 +5,7 @@
                                   string Email,
                                   string AvatarUrl,
                                   string Telefono)
-    : IRequest<CommandResponse>
+    : IRequest<CommandResponse>, ITransactionable
 { }
 
 public class CreatePeopleCommandHandler : IRequestHandler<CreatePeopleCommand, CommandResponse>

@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "signalr-client", "signalr-client\signalr-client.csproj", "{EA8554A6-5E5E-4614-9FF5-A81EA7C7739F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "signalr-client", "signalr-client\signalr-client.csproj", "{EA8554A6-5E5E-4614-9FF5-A81EA7C7739F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grpc-client", "grpc-client\grpc-client.csproj", "{5634C677-5F5E-4E97-95F4-23487868210B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{EA8554A6-5E5E-4614-9FF5-A81EA7C7739F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA8554A6-5E5E-4614-9FF5-A81EA7C7739F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA8554A6-5E5E-4614-9FF5-A81EA7C7739F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5634C677-5F5E-4E97-95F4-23487868210B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5634C677-5F5E-4E97-95F4-23487868210B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5634C677-5F5E-4E97-95F4-23487868210B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5634C677-5F5E-4E97-95F4-23487868210B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

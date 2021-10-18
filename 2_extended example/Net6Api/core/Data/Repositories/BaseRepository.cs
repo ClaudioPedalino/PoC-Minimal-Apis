@@ -1,4 +1,6 @@
-﻿public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity, new()
+﻿public class BaseRepository<TEntity>
+    : IBaseRepository<TEntity>
+    where TEntity : BaseEntity, new()
 {
     private readonly DataContext _dataContext;
     private readonly DbSet<TEntity> entities;
@@ -10,30 +12,20 @@
     }
 
     public async Task<IEnumerable<TEntity>> GetAll()
-    {
-        return await Task.FromResult(entities
-            .Where(x => !x.IsDelete)
-            .AsNoTracking());
-    }
+        => await Task.FromResult(entities
+        .Where(x => !x.IsDelete)
+        .AsNoTracking());
 
     public async Task<TEntity> GetById(Guid id)
-    {
-        return await entities
-            .AsNoTracking()
-            .FirstOrDefaultAsync(entity => entity.Id == id);
-    }
+        => await entities
+        .AsNoTracking()
+        .FirstOrDefaultAsync(entity => entity.Id == id);
 
     public async Task Insert(TEntity entity)
-    {
-        await entities.AddAsync(entity);
-        //await _dataContext.SaveChangesAsync();
-    }
+        => await entities.AddAsync(entity);
 
     public async Task Update(TEntity entity)
-    {
-        entities.Update(entity);
-        //await _dataContext.SaveChangesAsync();
-    }
+        => entities.Update(entity);
 
     public async Task<bool> Delete(Guid id)
     {
@@ -45,7 +37,6 @@
             //entities.Update(entity);
 
             entities.Remove(entity);
-            //await _dataContext.SaveChangesAsync();
             return true;
         }
         return false;

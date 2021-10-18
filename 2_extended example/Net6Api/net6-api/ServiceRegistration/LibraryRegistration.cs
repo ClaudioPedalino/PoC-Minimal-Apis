@@ -23,9 +23,6 @@
             options.ColorScheme = ColorScheme.Dark;
         }).AddEntityFramework();
 
-
-        //builder.Services.AddHealthCheck(Configuration);
-
         return builder;
     }
 }

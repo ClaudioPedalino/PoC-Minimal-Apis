@@ -16,6 +16,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\core\net6.core.csproj" />
+	  <ProjectReference Include="..\grpc-client\grpc-client.csproj" />
 	</ItemGroup>
 
 </Project>

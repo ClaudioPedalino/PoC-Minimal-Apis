@@ -3,12 +3,16 @@
     where TRequest : ITransactionable
 {
     private readonly ILogger<TransactionBehavior<TRequest, TResponse>> _logger;
-    private readonly IDbContext _dbContext;
+    private readonly IDataContext _dbContext;
+    private readonly EventStoreContext _eventContext;
 
-    public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger, IDbContext dbContext)
+    public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger,
+                               IDataContext dbContext,
+                               EventStoreContext eventContext)
     {
         _logger = logger;
         _dbContext = dbContext;
+        _eventContext = eventContext;
     }
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -22,7 +26,7 @@
                 await _dbContext.BeginTransactionAsync(cancellationToken);
 
                 response = await next();
-
+                _eventContext.AddEvent(typeof(TRequest).Name);
                 await _dbContext.CommitTransactionAsync(cancellationToken);
                 _logger.LogInformation($"End transaction: {typeof(TRequest).Name}.");
             });

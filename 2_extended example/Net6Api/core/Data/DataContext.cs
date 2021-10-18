@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-public class DataContext : DbContext, IDbContext
+﻿public class DataContext : DbContext, IDataContext
 {
     private readonly ILoggerFactory _dataContextLoggerFactory;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -28,6 +26,7 @@ public class DataContext : DbContext, IDbContext
     {
         optionsBuilder
             .UseLoggerFactory(_dataContextLoggerFactory)
+            .EnableDetailedErrors()
             .EnableSensitiveDataLogging();
 
         if (!optionsBuilder.IsConfigured)
@@ -38,6 +37,7 @@ public class DataContext : DbContext, IDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // TODO: Faltan los entity model builders
         base.OnModelCreating(modelBuilder);
     }
 

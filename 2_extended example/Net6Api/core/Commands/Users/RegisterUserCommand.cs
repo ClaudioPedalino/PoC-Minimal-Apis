@@ -1,4 +1,7 @@
-﻿public record RegisterUserCommand(string FirstName, string LastName, string Email, string Password)
+﻿public record RegisterUserCommand(string FirstName,
+                                  string LastName,
+                                  string Email,
+                                  string Password)
     : IRequest<AuthenticationResult>, ITransactionable
 { }
 

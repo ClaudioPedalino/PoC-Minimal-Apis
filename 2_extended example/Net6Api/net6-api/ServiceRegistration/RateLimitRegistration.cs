@@ -1,6 +1,4 @@
-﻿using AspNetCoreRateLimit;
-
-public static class RateLimitRegistration
+﻿public static class RateLimitRegistration
 {
     public static WebApplicationBuilder AddRateLimit(this WebApplicationBuilder builder)
     {

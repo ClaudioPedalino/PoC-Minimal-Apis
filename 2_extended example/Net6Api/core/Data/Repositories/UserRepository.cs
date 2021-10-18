@@ -8,7 +8,5 @@
     }
 
     public Task<IQueryable<User>> GetAll()
-    {
-        return Task.FromResult(_dataContext.Users.AsNoTracking());
-    }
+        => Task.FromResult(_dataContext.Users.AsNoTracking());
 }

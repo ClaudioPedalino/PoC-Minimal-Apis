@@ -2,11 +2,11 @@
 {
     public static void AddPlaceEndpoints(this WebApplication app)
     {
-        app.MapGet("api/v{version:apiVersion}/places", GetAll)
+        app.MapGet("api/places", GetAll)
             .Produces<IEnumerable<GetPlaceResponse>>(200)
             .AllowAnonymous();
 
-        app.MapGet("api/v{version:apiVersion}/places/{id}", GetById)
+        app.MapGet("api/places/{id}", GetById)
             .Produces<GetPlaceResponse>(200)
             .AllowAnonymous();
 

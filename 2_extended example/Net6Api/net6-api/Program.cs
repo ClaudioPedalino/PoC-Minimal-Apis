@@ -1,10 +1,6 @@
-using AspNetCoreRateLimit;
-using Microsoft.AspNetCore.Mvc.Versioning;
-
 var builder = WebApplication.CreateBuilder(args);
 AppConfig appConfig = builder.GetConfiguration();
 
-//builder.AddHealthCheck(appConfig);
 builder.AddRateLimit();
 builder.AddIdentity(appConfig);
 builder.AddDatabase(appConfig);
@@ -14,24 +10,12 @@ builder.AddClients(appConfig);
 builder.AddLibs();
 builder.AddServices();
 builder.AddRepositories();
-builder.Services.AddGrpc();
+//builder.Services.AddGrpc();
+builder.AddHealthCheck(appConfig);
 builder.AddSwagger(appConfig);
-
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    //options.ApiVersionReader = new HeaderApiVersionReader("minimal-api-version");
-    options.ApiVersionReader = new UrlSegmentApiVersionReader();
-
-    //options.Conventions.Controller<Anycontroller>(configuration);
-    options.ReportApiVersions = true;
-});
+//builder.AddApiVersioning();
 
 var app = builder.Build();
-//app.MapGrpcService<GreeterService>();
-//app.MapGet("/grpc", () =>
-//    "Communication with gRPC endpoints must be made through a gRPC client");
 
 #region [1] Bloating Endpoints
 //#region People Endpoints
@@ -137,11 +121,11 @@ app.UseAuthorization();
 app.UseFluentValidationExceptionHandler();
 app.MapHub<CriptoHub>("/live");
 app.AddSwagger(appConfig);
-//app.UseHealthCheck(appConfig);
+app.UseHealthCheck(appConfig);
 app.UseMiniProfiler();
-
-CommandHelper.NotifierHelperConfigure(
-    app.Services.GetService<INotifierService>(),
-    app.Services.GetService<IDistributedCache>());
+app.AddHelperConfiguration();
+//app.MapGrpcService<GreeterService>();
+//app.MapGet("/grpc", () =>
+//    "Communication with gRPC endpoints must be made through a gRPC client");
 
 app.Run();

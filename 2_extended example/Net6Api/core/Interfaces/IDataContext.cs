@@ -1,4 +1,4 @@
-﻿public interface IDbContext
+﻿public interface IDataContext
 {
     Task BeginTransactionAsync(CancellationToken cancellationToken);
 

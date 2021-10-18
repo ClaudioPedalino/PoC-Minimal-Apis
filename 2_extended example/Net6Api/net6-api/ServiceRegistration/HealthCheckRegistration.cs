@@ -4,13 +4,23 @@
     {
         builder.Services
             .AddHealthChecks()
-            //.AddCheck<MemoryHealthCheck>("Memory")
+            .AddCheck<MemoryHealthCheck>("Memory")
+            .AddCheck("Mock Service 1", () => HealthCheckResult.Healthy("Service 1 ok"))
+            .AddUrlGroup(
+                uri: new Uri("https://google.com"),
+                name: "CoinMarketCap WebSite",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: new string[] { "client", "http", "external" })
             .AddSqlServer(
-                appConfig.DatabaseConfig.SQLServerDb,
+                connectionString: appConfig.DatabaseConfig.SQLServerDb,
+                healthQuery: "SELECT 1;",
                 name: "SQLServerDb-check",
+                failureStatus: HealthStatus.Degraded,
                 tags: new string[] { "Net6ApiDb" });
 
-        //builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+        builder.Services.AddHealthChecksUI()
+            .AddSqlServerStorage(appConfig.DatabaseConfig.SQLServerDb);
+
         return builder;
     }
 
@@ -18,20 +28,22 @@
     {
         app.UseRouting();
 
-        //app.UseEndpoints(config =>
-        //{
-        //    config.MapHealthChecks("/health", new HealthCheckOptions
-        //    {
-        //        Predicate = _ => true,
-        //        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        //    });
+        app.UseEndpoints(config =>
+        {
+            config.MapHealthChecksUI();
 
-        //    config.MapHealthChecksUI(setup =>
-        //    {
-        //        setup.UIPath = "/health-ui";
-        //        setup.ApiPath = "/health-json";
-        //    });
-        //});
+            config.MapHealthChecks("/health", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+
+            //config.MapHealthChecksUI(setup =>
+            //{
+            //    setup.UIPath = "/hc-ui";
+            //    setup.ApiPath = "/hc-json";
+            //});
+        });
 
         return app;
     }

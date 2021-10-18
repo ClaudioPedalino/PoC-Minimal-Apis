@@ -36,6 +36,7 @@ public class DatabaseConfig
     public bool UsingLocalDb { get; init; }
     public string SqlLiteDb { get; init; }
     public string SQLServerDb { get; init; }
+    public string PostgreSqlDb { get; init; }
 }
 
 public class CacheSetting

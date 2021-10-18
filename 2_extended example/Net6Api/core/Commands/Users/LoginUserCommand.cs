@@ -1,4 +1,6 @@
-﻿public record LoginUserCommand(string Email, string Password) : IRequest<AuthenticationResult> { }
+﻿public record LoginUserCommand(string Email, string Password)
+    : IRequest<AuthenticationResult>
+{ }
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, AuthenticationResult>
 {
